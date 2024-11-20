@@ -19,3 +19,10 @@ MODEL_PARAMETERS = {
     "max_new_tokens": 1024
 }
 MODEL_TASK = "text-generation"
+
+#DATA PARAMETERS
+DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/TempData/data_files/"
+
+#Vector database
+VECTOR_DB_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/AI-Assisted-Resource-Navigator-for-Formerly-Incarcerated-Individuals/database/vector_database/chroma_db"
+VECTOR_DB_COLLECTION_NAME = 'legal_data_documents'

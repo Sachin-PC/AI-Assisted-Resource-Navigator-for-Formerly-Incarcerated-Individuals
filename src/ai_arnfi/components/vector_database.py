@@ -4,16 +4,16 @@ import logging
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
+import src.ai_arnfi.config.configuration as configuration
 
 class VectorDatabase:
     def __init__(self):
-        # self.data_directory = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/Crawled Data/1000/data/succesful_requests/"
-        self.vector_db_directory = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/AI-Assisted-Resource-Navigator-for-Formerly-Incarcerated-Individuals/database/vector_database/chroma_db"
+        self.vector_db_directory = configuration.VECTOR_DB_DIRECTORY
         self.hf_embeddings = HuggingFaceEmbeddings(
-            model_name="mixedbread-ai/mxbai-embed-large-v1",
+            model_name=configuration.EMBEDDING_MODEL_NAME,
         )
 
-        self.chroma_database = Chroma(collection_name='legal_data_documents',
+        self.chroma_database = Chroma(collection_name=configuration.VECTOR_DB_COLLECTION_NAME,
                                  embedding_function=self.hf_embeddings,
                                  persist_directory=self.vector_db_directory
                                  )

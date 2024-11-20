@@ -4,18 +4,18 @@ from langchain_community.document_loaders import UnstructuredHTMLLoader
 import logging
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
-from ai_arnfi.components.vector_database import VectorDatabase
+from  src.ai_arnfi.components.vector_database import VectorDatabase
+import src.ai_arnfi.config.configuration as configuration
 
 class DataProcess:
     def __init__(self):
         self.loaders = {
             '.html': (UnstructuredHTMLLoader, {})
         }
-        # self.data_directory = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/Crawled Data/1000/data/succesful_requests/"
-        self.data_directory = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/TempData/data_files/"
+        self.data_directory = configuration.DATA_DIRECTORY
         self.batch_size = 2
         self.hf_embeddings = HuggingFaceEmbeddings(
-            model_name="mixedbread-ai/mxbai-embed-large-v1",
+            model_name=configuration.EMBEDDING_MODEL_NAME,
         )
         self.docs_processed_till_now = 0
         self.vectorDatabase = VectorDatabase()
@@ -56,9 +56,9 @@ class DataProcess:
     def process_batch(self,batch):
         
         text_splitter = RecursiveCharacterTextSplitter(
-            separators= ["\n\n", "\n", " ", ""],
-            chunk_size=1000,
-            chunk_overlap=100
+            separators= configuration.CHUNK_SEPERATORS,
+            chunk_size=configuration.CHUNK_SIZE,
+            chunk_overlap=configuration.CHUNK_OVERLAP
         )
         split_docs = text_splitter.split_documents(batch)
         total_docs_in_this_batch = len(split_docs)
