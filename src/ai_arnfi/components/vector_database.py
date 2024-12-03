@@ -12,10 +12,11 @@ class VectorDatabase:
         self.hf_embeddings = HuggingFaceEmbeddings(
             model_name=configuration.EMBEDDING_MODEL_NAME,
         )
-
+        self.similarity_retreiver = None
         self.chroma_database = Chroma(collection_name=configuration.VECTOR_DB_COLLECTION_NAME,
                                  embedding_function=self.hf_embeddings,
-                                 persist_directory=self.vector_db_directory
+                                 persist_directory=self.vector_db_directory,
+                                 collection_metadata={"hnsw:space": "cosine"}
                                  )
         
     def add_data(self,documents,ids):
@@ -24,10 +25,17 @@ class VectorDatabase:
     def get_data(self):
         return self.chroma_database.get(include=['embeddings', 'documents', 'metadatas','uris'])
 
+    def get_similarity_retriever(self,search_type, search_kwargs):
+        if self.similarity_retreiver is None:
+            self.similarity_retreiver = self.chroma_database.as_retriever(search_type=search_type, search_kwargs=search_kwargs)
+        
+        return self.similarity_retreiver
 
-vectorDatabase = VectorDatabase()
-data = vectorDatabase.get_data()
-print(data)
+
+
+# vectorDatabase = VectorDatabase()
+# data = vectorDatabase.get_data()
+# print(data)
 # documents = [ 'ABCDEFGHIJKLMNOOPQRS',
 #  'Music therapy can aid in the mental well-being of individuals.',
 #  'The Milky Way is just one of billions of galaxies in the universe.',
