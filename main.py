@@ -67,16 +67,30 @@ from src.ai_arnfi.api.routes.conversation_endpoints import conversation_router
 from src.ai_arnfi.api.routes.login_auth import login_router
 from src.ai_arnfi.services.user_chat_service import UserChatService
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="AI-ASSISTED-RESOURCE-NAVIGATOR-FOR-FORMERLEY-INCARCERATED",
     version="1.0.0"
 )
 
+origins = [
+    "http://localhost:5173",  
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],           
+    allow_headers=["*"],
+)
+
 login_router
 
 app.include_router(conversation_router, prefix="/api")
-app.include_router(login_router, prefix="/api/auth")
+app.include_router(login_router, prefix="/api")
 
 if  __name__ == "__main__":
     

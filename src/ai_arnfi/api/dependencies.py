@@ -22,6 +22,7 @@ def get_user(
     database_session:Session = Depends(get_database_session),
     access_token: str = Depends(oauth2_scheme)
 ):
+    print("\n\naccess token = ",access_token)
     try:
         data = jwt.decode(access_token,SECRET_KEY, ALGORITHM)
         user_id: str = data.get("sub")

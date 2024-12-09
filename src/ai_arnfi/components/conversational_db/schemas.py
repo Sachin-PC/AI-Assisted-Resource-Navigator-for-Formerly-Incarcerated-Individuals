@@ -45,10 +45,10 @@ class Message(BaseModel):
 
 class UserQueryRequest(BaseModel):
     user_query: str
-    chat_session_id: int
 
 class QueryResponse(BaseModel):
     user_query_response: str
+    chat_session_id: int
     
     
 class Token(BaseModel):

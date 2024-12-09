@@ -26,7 +26,7 @@ MODEL_PARAMETERS = {
 MODEL_TASK = "text-generation"
 
 #DATA PARAMETERS
-DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/TempData/data_files/"
+DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/LegalAIDocuments/data_files/"
 
 #Vector database
 VECTOR_DB_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/AI-Assisted-Resource-Navigator-for-Formerly-Incarcerated-Individuals/database/vector_database/chroma_db"
