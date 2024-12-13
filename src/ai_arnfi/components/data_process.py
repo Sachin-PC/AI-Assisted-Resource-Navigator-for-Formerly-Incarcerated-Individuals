@@ -73,7 +73,7 @@ class DataProcess:
     
 
 dataProcess = DataProcess()
-dataProcess.load_data()
-# dataProcess.vectorDatabase.get_data()
+# dataProcess.load_data()
+print(dataProcess.vectorDatabase.get_data())
 
 

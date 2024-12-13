@@ -23,7 +23,7 @@ class VectorDatabase:
         self.chroma_database.add_documents(documents=documents, ids=ids)
 
     def get_data(self):
-        return self.chroma_database.get(include=['embeddings', 'documents', 'metadatas','uris'])
+        return self.chroma_database.get(include=['embeddings', 'documents', 'metadatas','uris'], limit=10)
 
     def get_similarity_retriever(self,search_type, search_kwargs):
         if self.similarity_retreiver is None:

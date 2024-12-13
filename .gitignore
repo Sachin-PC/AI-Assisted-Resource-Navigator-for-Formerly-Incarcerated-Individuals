@@ -167,4 +167,6 @@ database/
 
 env/
 
+src/ai_arnfi/evaluation/data/
+
 .DS_Store

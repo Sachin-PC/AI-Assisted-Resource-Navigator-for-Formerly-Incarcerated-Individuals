@@ -13,7 +13,7 @@ CHUNK_OVERLAP = 100
 
 #MODEL PARAMETERS
 MODEL_NAME = "gpt-3.5-turbo"
-MODEL_TEMPERATURE = 0
+MODEL_TEMPERATURE = 0.7
 MODEL_WAIT_FOR_MODEL = True
 MODEL_PARAMETERS = {
     "wait_for_model": True,
@@ -27,6 +27,7 @@ MODEL_TASK = "text-generation"
 
 #DATA PARAMETERS
 DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/LegalAIDocuments/data_files/"
+# DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/TempData/data_files/"
 
 #Vector database
 VECTOR_DB_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/AI-Assisted-Resource-Navigator-for-Formerly-Incarcerated-Individuals/database/vector_database/chroma_db"
@@ -45,3 +46,6 @@ SECRET_KEY = os.getenv("SECRET_KEY","test_default_key")
 ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 DEFAULT_EXPIRE_DELTA_TIME_IN_MINUTES=30
+
+#EVALUATION
+EVALUATION_DATA_FILE_PATH = "src/ai_arnfi/evaluation/data/rag_model_evaluation_data.csv"
