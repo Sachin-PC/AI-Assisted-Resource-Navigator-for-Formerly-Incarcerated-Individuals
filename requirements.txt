@@ -1,5 +1,6 @@
 fastapi
 sqlalchemy
+notebook
 python-dotenv
 pydantic
 python-jose
@@ -15,4 +16,8 @@ huggingface-hub
 chromadb
 psycopg2-binary
 python-multipart
+mlflow
+ensure
+-e . #This is required for creation as a local project
+
 
