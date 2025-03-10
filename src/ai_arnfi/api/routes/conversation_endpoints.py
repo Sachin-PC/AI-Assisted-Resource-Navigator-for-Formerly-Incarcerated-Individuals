@@ -8,7 +8,6 @@ from src.ai_arnfi.components.conversational_db import db_operations
 conversation_router = APIRouter()
 
 def get_user_chat_service():
-    print("NNNNNNNNNNNNNNNNNNN")
     return UserChatService()
 
 @conversation_router.post("/legalchat/{chat_id}/get_response", response_model=QueryResponse)
