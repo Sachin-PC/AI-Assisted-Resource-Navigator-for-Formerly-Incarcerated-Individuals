@@ -209,11 +209,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
-        
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -238,22 +233,23 @@ jobs:
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
         # Setup SSH
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/private_key
         chmod 600 ~/.ssh/private_key
         
-        # Clean up any existing deployment files on EC2
-        ssh -i ~/.ssh/private_key -o StrictHostKeyChecking=no ubuntu@$EC2_HOST '
-          rm -f ~/deploy.sh
-          rm -f ~/cleanup.sh
-        '
+        # Get ECR login token and create deploy script
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} > ecr_token.txt
         
-        # Create deployment script
+        # Create deployment script with ECR authentication
         cat << 'EOF' > deploy.sh
         #!/bin/bash
         set -e
+
+        # Login to ECR
+        echo "$(<ecr_token.txt)" | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_LOGIN_URI }}
 
         # Pull the latest image
         docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
@@ -279,14 +275,16 @@ jobs:
         docker system prune -f
         EOF
 
-        # Copy and execute deployment script
+        # Copy token and deployment script to EC2
+        scp -i ~/.ssh/private_key -o StrictHostKeyChecking=no ecr_token.txt ubuntu@$EC2_HOST:~/ecr_token.txt
         scp -i ~/.ssh/private_key -o StrictHostKeyChecking=no deploy.sh ubuntu@$EC2_HOST:~/deploy.sh
+        
+        # Execute deployment script
         ssh -i ~/.ssh/private_key -o StrictHostKeyChecking=no ubuntu@$EC2_HOST '
           chmod +x ~/deploy.sh
           ~/deploy.sh
-          rm ~/deploy.sh
+          rm ~/deploy.sh ~/ecr_token.txt
         '
         
         # Clean up local files
-        rm -f deploy.sh
-        rm -f ~/.ssh/private_key
+        rm -f deploy.sh ecr_token.txt ~/.ssh/private_key
