@@ -18,6 +18,4 @@ psycopg2-binary
 python-multipart
 mlflow
 ensure
--e . #This is required for creation as a local project
-
-
+# -e . #This is required for creation as a local project

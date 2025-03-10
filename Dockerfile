@@ -20,13 +20,18 @@ RUN apt-get update \
 # Copy requirements and install dependencies
 COPY requirements.txt .
 COPY setup.py .
-COPY .env .
+COPY README.md .
+# COPY .env .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip3 install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
+
+RUN pip install --no-cache-dir .
 
 # Expose the port the app runs on
 EXPOSE 8000
