@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-from pathlib import Path
 
 load_dotenv()
 
@@ -26,14 +25,9 @@ MODEL_PARAMETERS = {
 }
 MODEL_TASK = "text-generation"
 
-# Get the project root directory (2 levels up from config directory)
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
-
-# Set data directory relative to project root, allow override via environment variable
-DATA_DIRECTORY = os.getenv(
-    "DATA_DIRECTORY",
-    os.path.join(PROJECT_ROOT, "data_files")
-)
+#DATA PARAMETERS
+DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/LegalAIDocuments/data_files/"
+# DATA_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/TempData/data_files/"
 
 #Vector database
 VECTOR_DB_DIRECTORY = "/Users/sachinpc/Documents/GitHubProjects/AI_FOR_HCI/AI-Assisted-Resource-Navigator-for-Formerly-Incarcerated-Individuals/database/vector_database/chroma_db"
